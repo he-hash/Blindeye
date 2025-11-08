@@ -1,4 +1,4 @@
-# 🛡️ BlindEye - Malicious Content Injection Detector
+# BlindEye - Malicious Content Injection Detector
 
 <div align="center">
 
