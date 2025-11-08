@@ -13,7 +13,6 @@ const SENSITIVE_SELECTORS = [
 ];
 
 const SUSPICIOUS_PATTERNS = {
-  // Only flag truly unknown domains (whitelist major CDNs and services)
   externalScripts: /https?:\/\/(?!.*(google|gstatic|facebook|twitter|cloudflare|jquery|cdn|jsdelivr|unpkg|cdnjs|googleapis|apple|microsoft|amazon|akamai|fastly|recaptcha))/,
   obfuscation: /(eval|atob|fromCharCode)/,
   dataExfil: /(fetch|XMLHttpRequest|sendBeacon).*\.(password|email|card)/i,
@@ -52,7 +51,7 @@ class BlindEye {
     this.startPeriodicScan();
   }
 
-  // Periodically check for new forms that might have been missed
+
   startPeriodicScan() {
     setInterval(() => {
       this.trackSensitiveElements();
@@ -76,8 +75,6 @@ class BlindEye {
       document.querySelectorAll(selector).forEach(el => {
         if (!this.observedElements.has(el)) {
           this.observedElements.add(el);
-          
-          // Store original attributes
           const originalAttrs = {};
           if (el.tagName === 'FORM') {
             originalAttrs.action = el.action || el.getAttribute('action');
@@ -142,7 +139,6 @@ class BlindEye {
                 }
               });
             } catch (e) {
-              // Selector might not be valid for this node
             }
           });
         }
@@ -180,8 +176,6 @@ class BlindEye {
     const src = scriptNode.src;
     const content = scriptNode.textContent;
     const hash = this.hashScript(src || content);
-
-    // Check if this is a new script (not from initial page load)
     if (!this.scriptHashes.has(hash)) {
       // Check if script is from a trusted domain
       if (src && this.isTrustedDomain(src)) {
